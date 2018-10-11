@@ -7,6 +7,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.axiasoft.mycertificationworkout.daos.ItemDao;
 import com.axiasoft.mycertificationworkout.models.Item;
@@ -39,9 +40,14 @@ public abstract class ItemRoomDatabase extends RoomDatabase {
             new RoomDatabase.Callback(){
 
                 @Override
+                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                    super.onCreate(db);
+                    new PopulateDefaultDbAsync(INSTANCE).execute();
+                }
+
+                @Override
                 public void onOpen (@NonNull SupportSQLiteDatabase db){
                     super.onOpen(db);
-                    new PopulateDefaultDbAsync(INSTANCE).execute();
                 }
             };
 
@@ -57,6 +63,7 @@ public abstract class ItemRoomDatabase extends RoomDatabase {
         protected Void doInBackground(final Void... params) {
             mDao.queryDeleteAll();
             //TODO read from file? from string array?
+            Log.d("ROOM", "Se ha creado de nuevo la base de datos");
             Item item = new Item("Hello");
             mDao.insert(item);
             item = new Item("World");

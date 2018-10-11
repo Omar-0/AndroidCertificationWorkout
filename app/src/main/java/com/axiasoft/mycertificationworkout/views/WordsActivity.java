@@ -2,6 +2,7 @@ package com.axiasoft.mycertificationworkout.views;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.axiasoft.mycertificationworkout.R;
 import com.axiasoft.mycertificationworkout.models.Item;
@@ -19,6 +21,9 @@ import com.axiasoft.mycertificationworkout.models.Item;
 import java.util.List;
 
 public class WordsActivity extends AppCompatActivity {
+
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+
 
     //TODO add support for Define data using Room entities
     //Access Room database with data access object (DAO)
@@ -48,13 +53,13 @@ public class WordsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO launch activity to create a new Item
+                Intent intent = new Intent(WordsActivity.this, NewWordActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
 
 
         itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
-
         itemViewModel.getAllWords().observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(@Nullable final List<Item> words) {
@@ -63,6 +68,21 @@ public class WordsActivity extends AppCompatActivity {
                 adapter.setWords(words);
             }
         });
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Item word = new Item(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
+            itemViewModel.insert(word);
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.item_already_exists_message,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 
