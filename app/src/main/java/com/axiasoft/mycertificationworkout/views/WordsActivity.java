@@ -1,15 +1,22 @@
 package com.axiasoft.mycertificationworkout.views;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.axiasoft.mycertificationworkout.R;
+import com.axiasoft.mycertificationworkout.models.Item;
+
+import java.util.List;
 
 public class WordsActivity extends AppCompatActivity {
 
@@ -18,6 +25,9 @@ public class WordsActivity extends AppCompatActivity {
     //Observe and respond to changing data using LiveData
     //Use a Repository to handle data operations
     //Read and parse raw resources or asset files
+
+    private ItemViewModel itemViewModel;
+
 
 
     @Override
@@ -28,6 +38,12 @@ public class WordsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        final ItemListAdapter adapter = new ItemListAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +52,17 @@ public class WordsActivity extends AppCompatActivity {
             }
         });
 
+
+        itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
+
+        itemViewModel.getAllWords().observe(this, new Observer<List<Item>>() {
+            @Override
+            public void onChanged(@Nullable final List<Item> words) {
+                // Update the cached copy of the words in the adapter.
+                //TODO only observe add and delete and only in oncreate?
+                adapter.setWords(words);
+            }
+        });
     }
 
 

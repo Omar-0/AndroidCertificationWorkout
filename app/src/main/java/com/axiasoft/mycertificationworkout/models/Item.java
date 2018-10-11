@@ -21,8 +21,13 @@ public class Item implements Comparator<Item>, Comparable<Item> {
     @ColumnInfo(name = "sorted")
     private boolean sorted;
 
+    public Item(String value){
+        this.value = value;
+    }
+
     //Methods that compare if item is equal or differente to another just taking in account the String value,
     //by making value to primary key we can skip these methods
+    //region Compare & Comparator Overrides
     @Override
     public int compare(Item s, Item t1) {
         return s.value.compareTo(t1.value);
@@ -39,6 +44,7 @@ public class Item implements Comparator<Item>, Comparable<Item> {
     public int compareTo(@NonNull Item item) {
         return this.value.compareTo(item.value);
     }
+    //endregion
 
     //region Getters & Setters
     public boolean isSorted() {

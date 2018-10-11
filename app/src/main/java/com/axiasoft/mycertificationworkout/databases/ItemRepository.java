@@ -17,7 +17,7 @@ public class ItemRepository {
     public ItemRepository(Application application) {
         ItemRoomDatabase db = ItemRoomDatabase.getDatabase(application);
         mItemDao = db.wordDao();
-        allItems = mItemDao.getAllWords();
+        allItems = mItemDao.queryGetAllItems();
     }
 
     public LiveData<List<Item>> getAllItems() {
