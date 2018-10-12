@@ -1,24 +1,37 @@
 package com.axiasoft.mycertificationworkout.views;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.axiasoft.mycertificationworkout.R;
+import com.axiasoft.mycertificationworkout.models.Item;
+
+import java.util.List;
 
 public class WordsActivity extends AppCompatActivity {
 
-    //TODO add support for Define data using Room entities
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+
     //Access Room database with data access object (DAO)
     //Observe and respond to changing data using LiveData
     //Use a Repository to handle data operations
     //Read and parse raw resources or asset files
 
+    private ItemViewModel itemViewModel;
+
+    ItemListAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,14 +41,58 @@ public class WordsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        //we need the adapter as member to use it outside oncreate
+        adapter = new ItemListAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO launch activity to create a new Item
+                Intent intent = new Intent(WordsActivity.this, NewWordActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
             }
         });
 
+
+        itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
+        itemViewModel.getAllWords().observe(this, listObserver);
+        adapter.setItemViewModel(itemViewModel);
+    }
+
+    Observer<List<Item>> listObserver = new Observer<List<Item>>() {
+        @Override
+        public void onChanged(@Nullable final List<Item> words) {
+            // Update the cached copy of the words in the adapter.
+            adapter.setWords(words);
+        }
+    };
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Item word = new Item(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
+            //Just for purpose we evaluate outside. The DB insert returns -1 on duplicate, and we can
+            // evaluate that insertion
+            if(adapter.hasItem(word)){
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.item_already_exists_message,
+                        Toast.LENGTH_LONG).show();
+            } else {
+                itemViewModel.insert(word);
+            }
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.item_already_exists_message,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 
