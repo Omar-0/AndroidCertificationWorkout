@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +62,7 @@ public class WordsActivity extends AppCompatActivity {
         itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
         itemViewModel.getAllWords().observe(this, listObserver);
         adapter.setItemViewModel(itemViewModel);
+        adapter.setUndoDeleteCallback(undoDeleteCallback);
     }
 
     Observer<List<Item>> listObserver = new Observer<List<Item>>() {
@@ -68,6 +70,18 @@ public class WordsActivity extends AppCompatActivity {
         public void onChanged(@Nullable final List<Item> words) {
             // Update the cached copy of the words in the adapter.
             adapter.setWords(words);
+        }
+    };
+
+    interface UndoDeleteCallback{
+        void showSnackbar(Item itemToRestore);
+    }
+
+    UndoDeleteCallback undoDeleteCallback = new UndoDeleteCallback() {
+        @Override
+        public void showSnackbar(Item itemToRestore) {
+            //TODO show the snackbar and implement the action undo button
+            Log.d("XXX", "Here will show the snackbar!!");
         }
     };
 

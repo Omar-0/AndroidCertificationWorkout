@@ -25,6 +25,10 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     private List<Item> displayItems; // Cached copy of words
 
+    WordsActivity.UndoDeleteCallback undoDeleteCallback;
+
+    private Item lastDeletedItem;
+
     ItemListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
 
 
@@ -46,6 +50,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
                 public void onClick(View view) {
                     Item item = displayItems.get(getAdapterPosition());
                     itemViewModel.delete(item);
+                    undoDeleteCallback.showSnackbar(item);
                 }
             });
         }
@@ -108,10 +113,6 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         return display;
     }
 
-    public void setItemViewModel(ItemViewModel itemViewModel){
-        this.itemViewModel = itemViewModel;
-    }
-
     // getItemCount() is called many times, and when it is first called,
     // mWords has not been updated (means initially, it's null, and we can't return null).
     @Override
@@ -123,5 +124,14 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     public boolean hasItem(Item item){
         return displayItems.contains(item);
+    }
+
+
+    public void setItemViewModel(ItemViewModel itemViewModel){
+        this.itemViewModel = itemViewModel;
+    }
+
+    public void setUndoDeleteCallback(WordsActivity.UndoDeleteCallback undoDeleteCallback) {
+        this.undoDeleteCallback = undoDeleteCallback;
     }
 }
