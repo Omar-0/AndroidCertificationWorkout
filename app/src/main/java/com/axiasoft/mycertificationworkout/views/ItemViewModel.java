@@ -28,4 +28,8 @@ public class ItemViewModel extends AndroidViewModel {
     public void update(Item item){
         mRepository.update(item);
     }
+
+    public void delete(Item item){
+        mRepository.delete(item);
+    }
 }

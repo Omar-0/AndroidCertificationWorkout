@@ -72,4 +72,24 @@ public class ItemRepository {
             return null;
         }
     }
+
+    public void delete(Item item){
+        new deleteItemAsyncTask(mItemDao).execute(item);
+    }
+
+    private static class deleteItemAsyncTask extends AsyncTask<Item, Void, Void>{
+
+        private ItemDao mAsyncTaskDao;
+
+        deleteItemAsyncTask(ItemDao dao){
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Item... items) {
+            mAsyncTaskDao.deleteItem(items[0]);
+            return null;
+        }
+    }
+
 }

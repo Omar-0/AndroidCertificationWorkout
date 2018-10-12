@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -20,23 +21,36 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     private ItemViewModel itemViewModel;
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final TextView wordItemView;
-
-        private final CheckBox checkBox;
-
-        private ItemViewHolder(View itemView) {
-            super(itemView);
-            wordItemView = itemView.findViewById(R.id.tv_item_name);
-            checkBox =  itemView.findViewById(R.id.cb_item_status);
-        }
-    }
-
     private final LayoutInflater mInflater;
 
     private List<Item> displayItems; // Cached copy of words
 
     ItemListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+
+
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final TextView wordItemView;
+
+        private final CheckBox checkBox;
+
+        private final Button deleteButton;
+
+        private ItemViewHolder(View itemView) {
+            super(itemView);
+            wordItemView = itemView.findViewById(R.id.tv_item_name);
+            checkBox =  itemView.findViewById(R.id.cb_item_status);
+            deleteButton = itemView.findViewById(R.id.bt_item_delete);
+
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Item item = displayItems.get(getAdapterPosition());
+                    itemViewModel.delete(item);
+                }
+            });
+        }
+    }
+
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
