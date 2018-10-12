@@ -5,7 +5,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +36,8 @@ public class WordsActivity extends AppCompatActivity {
 
     ItemListAdapter adapter;
 
+    CoordinatorLayout coordinatorLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -41,6 +45,8 @@ public class WordsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_words);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        coordinatorLayout = findViewById(R.id.coordinator);
 
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -79,9 +85,18 @@ public class WordsActivity extends AppCompatActivity {
 
     UndoDeleteCallback undoDeleteCallback = new UndoDeleteCallback() {
         @Override
-        public void showSnackbar(Item itemToRestore) {
-            //TODO show the snackbar and implement the action undo button
+        public void showSnackbar(final Item itemToRestore) {
             Log.d("XXX", "Here will show the snackbar!!");
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, getString(R.string.snackbar_message_delete), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.snackbar_message_undo), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            itemViewModel.insert(itemToRestore);
+                        }
+                    });
+
+            snackbar.show();
         }
     };
 

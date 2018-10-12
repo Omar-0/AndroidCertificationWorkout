@@ -25,4 +25,7 @@
 
 
     <string name="item_already_exists_message">Item already exists</string>
+
+    <string name="snackbar_message_delete">deleted</string>
+    <string name="snackbar_message_undo">UNDO</string>
 </resources>
