@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.axiasoft.mycertificationworkout.R;
 import com.axiasoft.mycertificationworkout.models.Item;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -69,12 +70,28 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     void setWords(List<Item> items){
         //order the items
-        displayItems = items;
+        displayItems = orderAndDisplayItems(items);
         notifyDataSetChanged();
     }
 
 
-    public void setDisplayItems(){
+    public ArrayList<Item> orderAndDisplayItems(List<Item> items){
+
+        ArrayList<Item> unsorted = new ArrayList<>();
+        ArrayList<Item> sorted = new ArrayList<>();
+        ArrayList<Item> display = new ArrayList<>();
+
+        for (Item i: items) {
+            if(i.isSorted()){
+                sorted.add(i);
+            } else {
+                unsorted.add(i);
+            }
+        }
+        Collections.sort(sorted);
+        display.addAll(unsorted);
+        display.addAll(sorted);
+        return display;
     }
 
     public void setItemViewModel(ItemViewModel itemViewModel){

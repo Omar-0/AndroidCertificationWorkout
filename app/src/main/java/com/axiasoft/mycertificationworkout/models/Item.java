@@ -25,7 +25,7 @@ public class Item implements Comparator<Item>, Comparable<Item> {
         this.value = value;
     }
 
-    //Methods that compare if item is equal or differente to another just taking in account the String value,
+    //Methods that compare if item is equal or different to another just taking in account the String value,
     //by making value to primary key we can skip these methods
     //region Compare & Comparator Overrides
     @Override
