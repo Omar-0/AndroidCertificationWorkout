@@ -6,14 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.axiasoft.mycertificationworkout.R;
 import com.axiasoft.mycertificationworkout.models.Item;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemViewHolder> {
+
+    private ItemViewModel itemViewModel;
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         private final TextView wordItemView;
@@ -40,11 +44,23 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, int position) {
+    public void onBindViewHolder(final ItemViewHolder holder, int position) {
         if (displayItems != null) {
-            Item current = displayItems.get(position);
+            final Item current = displayItems.get(position);
+            holder.checkBox.setOnCheckedChangeListener(null);
+
             holder.wordItemView.setText(current.getValue());
             holder.checkBox.setChecked(current.isSorted());
+
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    Item current = displayItems.get(holder.getAdapterPosition());
+                    current.setSorted(b);
+                    itemViewModel.update(current);
+                }
+            });
+
         } else {
             // Covers the case of data not being ready yet.
             holder.wordItemView.setText("No Word");
@@ -52,16 +68,17 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     }
 
     void setWords(List<Item> items){
+        //order the items
         displayItems = items;
         notifyDataSetChanged();
     }
 
-    //TODO only delete and add are relevant for the livedata
 
     public void setDisplayItems(){
+    }
 
-        //TODO sort the GUI list
-
+    public void setItemViewModel(ItemViewModel itemViewModel){
+        this.itemViewModel = itemViewModel;
     }
 
     // getItemCount() is called many times, and when it is first called,
@@ -71,5 +88,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         if (displayItems != null)
             return displayItems.size();
         else return 0;
+    }
+
+    public boolean hasItem(Item item){
+        return displayItems.contains(item);
     }
 }

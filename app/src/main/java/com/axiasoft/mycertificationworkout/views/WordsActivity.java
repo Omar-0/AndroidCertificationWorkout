@@ -24,8 +24,6 @@ public class WordsActivity extends AppCompatActivity {
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
-
-    //TODO add support for Define data using Room entities
     //Access Room database with data access object (DAO)
     //Observe and respond to changing data using LiveData
     //Use a Repository to handle data operations
@@ -33,7 +31,7 @@ public class WordsActivity extends AppCompatActivity {
 
     private ItemViewModel itemViewModel;
 
-
+    ItemListAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +43,8 @@ public class WordsActivity extends AppCompatActivity {
 
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final ItemListAdapter adapter = new ItemListAdapter(this);
+        //we need the adapter as member to use it outside oncreate
+        adapter = new ItemListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -60,15 +59,17 @@ public class WordsActivity extends AppCompatActivity {
 
 
         itemViewModel = ViewModelProviders.of(this).get(ItemViewModel.class);
-        itemViewModel.getAllWords().observe(this, new Observer<List<Item>>() {
-            @Override
-            public void onChanged(@Nullable final List<Item> words) {
-                // Update the cached copy of the words in the adapter.
-                //TODO only observe add and delete and only in oncreate?
-                adapter.setWords(words);
-            }
-        });
+        itemViewModel.getAllWords().observe(this, listObserver);
+        adapter.setItemViewModel(itemViewModel);
     }
+
+    Observer<List<Item>> listObserver = new Observer<List<Item>>() {
+        @Override
+        public void onChanged(@Nullable final List<Item> words) {
+            // Update the cached copy of the words in the adapter.
+            adapter.setWords(words);
+        }
+    };
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -76,7 +77,16 @@ public class WordsActivity extends AppCompatActivity {
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Item word = new Item(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
-            itemViewModel.insert(word);
+            //Just for purpose we evaluate outside. The DB insert returns -1 on duplicate, and we can
+            // evaluate that insertion
+            if(adapter.hasItem(word)){
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.item_already_exists_message,
+                        Toast.LENGTH_LONG).show();
+            } else {
+                itemViewModel.insert(word);
+            }
         } else {
             Toast.makeText(
                     getApplicationContext(),

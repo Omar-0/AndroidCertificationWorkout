@@ -2,7 +2,9 @@ package com.axiasoft.mycertificationworkout.daos;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -13,8 +15,8 @@ import java.util.List;
 @Dao
 public interface ItemDao {
 
-    @Insert
-    void insert(Item word);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    long insert(Item word);
 
     @Query("DELETE FROM item_table")
     void queryDeleteAll();
@@ -25,6 +27,9 @@ public interface ItemDao {
 
     @Update
     void updateItem(Item item);
+
+    @Delete
+    void deleteItem(Item item);
 
     //@Query("UPDATE item_table SET sorted =  WHERE condition;")
     //void updateItem();

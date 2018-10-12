@@ -3,6 +3,7 @@ package com.axiasoft.mycertificationworkout.databases;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.axiasoft.mycertificationworkout.daos.ItemDao;
 import com.axiasoft.mycertificationworkout.models.Item;
@@ -32,6 +33,7 @@ public class ItemRepository {
     private static class insertAsyncTask extends AsyncTask<Item, Void, Void> {
 
         private ItemDao mAsyncTaskDao;
+        private long result = 0l;
 
         insertAsyncTask(ItemDao dao) {
             mAsyncTaskDao = dao;
@@ -39,7 +41,34 @@ public class ItemRepository {
 
         @Override
         protected Void doInBackground(final Item... params) {
-            mAsyncTaskDao.insert(params[0]);
+            result = mAsyncTaskDao.insert(params[0]);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Log.d("XXX", "La insercion fue: " + result);
+
+        }
+    }
+
+    public void update(Item item){
+        new updateItemAsyncTask(mItemDao).execute(item);
+    }
+
+    private static class updateItemAsyncTask extends AsyncTask<Item, Void,Void>{
+
+        private ItemDao mAsyncTaskDao;
+
+        updateItemAsyncTask(ItemDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Item... items) {
+            mAsyncTaskDao.updateItem(items[0]);
             return null;
         }
     }

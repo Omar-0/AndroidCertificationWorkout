@@ -23,5 +23,9 @@ public class ItemViewModel extends AndroidViewModel {
 
     LiveData<List<Item>> getAllWords() { return mAllItems; }
 
-    public void insert(Item word) { mRepository.insert(word); }
+    public void insert(Item item) { mRepository.insert(item); }
+
+    public void update(Item item){
+        mRepository.update(item);
+    }
 }
