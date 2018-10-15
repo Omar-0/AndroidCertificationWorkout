@@ -1,4 +1,4 @@
-package com.axiasoft.mycertificationworkout.views;
+package com.axiasoft.mycertificationworkout.views.words;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;

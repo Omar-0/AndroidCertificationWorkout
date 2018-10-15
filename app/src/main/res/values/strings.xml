@@ -10,9 +10,6 @@
     <string name="add_item_text">Add New Item</string>
 
 
-
-
-
     <!--Default items to be added to the list TODO move this list to file maybe-->
     <string-array name="default_items">
         <item>Bends</item>
@@ -28,4 +25,10 @@
 
     <string name="snackbar_message_delete">deleted</string>
     <string name="snackbar_message_undo">UNDO</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.axiasoft.mycertificationworkout.views;
+package com.axiasoft.mycertificationworkout.views.words;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

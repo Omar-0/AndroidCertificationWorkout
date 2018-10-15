@@ -1,4 +1,4 @@
-package com.axiasoft.mycertificationworkout.views;
+package com.axiasoft.mycertificationworkout.views.words;
 
 import android.content.Intent;
 import android.os.Bundle;
