@@ -1,4 +1,4 @@
-package com.axiasoft.mycertificationworkout.views;
+package com.axiasoft.mycertificationworkout.views.words;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

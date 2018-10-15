@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    tools:context=".views.WordsActivity"
+    tools:context=".views.words.WordsActivity"
     android:background="@android:color/white"
     android:layout_marginTop="1dp"
     android:layout_marginBottom="1dp">
