@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.axiasoft.mycertificationworkout.R;
+import com.axiasoft.mycertificationworkout.views.schedulenotifications.SchedulerActivity;
 import com.axiasoft.mycertificationworkout.views.words.WordsActivity;
 
 public class HomeActivity extends AppCompatActivity
@@ -87,7 +88,7 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_room) {
             launchWordsActivity();
         } else if (id == R.id.nav_jobs) {
-
+            lauchJobsActivity();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -105,5 +106,9 @@ public class HomeActivity extends AppCompatActivity
 
     private void launchWordsActivity(){
         startActivity(new Intent(this, WordsActivity.class));
+    }
+
+    private void lauchJobsActivity(){
+        startActivity(new Intent(this, SchedulerActivity.class));
     }
 }
