@@ -52,6 +52,7 @@ public class NotificationJobService extends JobService {
     public boolean onStartJob(JobParameters jobParameters) {
         //Create the notification channel
         createNotificationChannel();
+        String jobName = jobParameters.getExtras().getString("Name", "");
 
 //Set up the notification content intent to launch the app when clicked
         PendingIntent contentPendingIntent = PendingIntent.getActivity
@@ -60,7 +61,7 @@ public class NotificationJobService extends JobService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder
                 (this, PRIMARY_CHANNEL_ID)
                 .setContentTitle("Job Service")
-                .setContentText("Your Job ran to completion!")
+                .setContentText("Your "+ jobName + " Job ran to completion!")
                 .setContentIntent(contentPendingIntent)
                 .setSmallIcon(R.drawable.ic_job_running)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

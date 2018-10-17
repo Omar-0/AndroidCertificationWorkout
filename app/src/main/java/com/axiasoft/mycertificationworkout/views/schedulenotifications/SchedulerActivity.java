@@ -4,11 +4,13 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Switch;
@@ -21,6 +23,8 @@ import com.axiasoft.mycertificationworkout.services.NotificationJobService;
 public class SchedulerActivity extends AppCompatActivity {
 
     private static final int JOB_ID = 0;
+
+    private EditText mJobName;
 
     //Switches for setting job options
     private Switch mDeviceIdleSwitch;
@@ -39,6 +43,8 @@ public class SchedulerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final TextView seekBarProgress = findViewById(R.id.seekBarProgress);
+
+        mJobName = findViewById(R.id.edit_text_job_name);
 
         RadioGroup networkOptions = findViewById(R.id.networkOptions);
 
@@ -104,6 +110,12 @@ public class SchedulerActivity extends AppCompatActivity {
                 //Job must run after (x) seconds
                 builder.setOverrideDeadline(seekBarInteger * 1000);
             }
+            if(!mJobName.getText().toString().isEmpty()){
+                PersistableBundle persistableBundle = new PersistableBundle();
+                persistableBundle.putString("Name", mJobName.getText().toString());
+                builder.setExtras(persistableBundle);
+            }
+
             //Schedule the job and notify the user
             JobInfo myJobInfo = builder.build();
             mScheduler.schedule(myJobInfo);
