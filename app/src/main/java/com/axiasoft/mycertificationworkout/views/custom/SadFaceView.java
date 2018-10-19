@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /* Example from https://www.raywenderlich.com/142-android-custom-view-tutorial */
@@ -25,7 +26,7 @@ public class SadFaceView extends View {
     private int borderColor = Color.BLACK;
     // Face border width in pixels
     private float borderWidth = 4.0f;
-    // View size in pixels
+    // View size in pixels a square view
     private int size = 320;
 
     private Path mouthPath = new Path();
@@ -43,6 +44,43 @@ public class SadFaceView extends View {
         drawMouth(canvas);
     }
 
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        Log.d("FACE", MeasureSpec.getSize(widthMeasureSpec) + " width");
+        Log.d("FACE", MeasureSpec.getSize(heightMeasureSpec) + " heihtg");
+
+        Log.v("[View name] onMeasure w", MeasureSpec.toString(widthMeasureSpec));
+        Log.v("[View name] onMeasure h", MeasureSpec.toString(heightMeasureSpec));
+
+        //int desiredWidth = getSuggestedMinimumWidth() + getPaddingLeft() + getPaddingRight();
+        //int desiredHeight = getSuggestedMinimumHeight() + getPaddingTop() + getPaddingBottom();
+        
+        setMeasuredDimension(measureDimension(size, MeasureSpec.getSize(widthMeasureSpec)),
+                measureDimension(size, MeasureSpec.getSize(heightMeasureSpec)));
+    }
+
+    private int measureDimension(int desiredSize, int measureSpec) {
+        int result;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+
+        if (specMode == MeasureSpec.EXACTLY) {
+            result = specSize;
+        } else {
+            result = desiredSize;
+            if (specMode == MeasureSpec.AT_MOST) {
+                result = Math.min(result, specSize);
+            }
+        }
+
+        if (result < desiredSize){
+            Log.e("ChartView", "The view is too small, the content might get cut");
+        }
+        return result;
+    }
 
     private void drawFaceBackground(Canvas canvas) {
 
