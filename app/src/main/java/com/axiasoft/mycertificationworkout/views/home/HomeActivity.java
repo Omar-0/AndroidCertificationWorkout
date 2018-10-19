@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.axiasoft.mycertificationworkout.R;
+import com.axiasoft.mycertificationworkout.views.custom.CustomViewActivity;
 import com.axiasoft.mycertificationworkout.views.schedulenotifications.SchedulerActivity;
 import com.axiasoft.mycertificationworkout.views.settings.SettingsActivity;
 import com.axiasoft.mycertificationworkout.views.words.WordsActivity;
@@ -95,8 +96,8 @@ public class HomeActivity extends AppCompatActivity
             launchWordsActivity();
         } else if (id == R.id.nav_jobs) {
             lauchJobsActivity();
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_custom_views) {
+            launchCustomsViewsActivity();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -126,5 +127,9 @@ public class HomeActivity extends AppCompatActivity
 
     private void lauchJobsActivity(){
         startActivity(new Intent(this, SchedulerActivity.class));
+    }
+
+    private void launchCustomsViewsActivity(){
+        startActivity(new Intent(this, CustomViewActivity.class));
     }
 }
