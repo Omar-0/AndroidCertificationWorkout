@@ -94,6 +94,8 @@ public class SadFaceView extends View {
         borderWidth = typedArray.getDimension(R.styleable.SadFaceView_borderWidth,
                 DEFAULT_BORDER_WIDTH);
 
+        size = (int) typedArray.getDimension(R.styleable.SadFaceView_faceSize, size);
+
         // 8
         // TypedArray objects are shared and must be recycled.
         typedArray.recycle();

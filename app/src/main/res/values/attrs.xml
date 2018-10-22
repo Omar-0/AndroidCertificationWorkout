@@ -8,6 +8,7 @@
         <attr name="mouthColor" format="color" />
         <attr name="borderColor" format="color" />
         <attr name="borderWidth" format="dimension" />
+        <attr name="faceSize" format="dimension"/>
         <attr name="state" format="enum">
             <enum name="happy" value="0" />
             <enum name="sad" value="1" />
