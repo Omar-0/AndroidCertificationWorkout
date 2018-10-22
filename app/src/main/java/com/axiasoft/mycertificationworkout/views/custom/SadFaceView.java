@@ -101,6 +101,11 @@ public class SadFaceView extends View {
         typedArray.recycle();
     }
 
+    public void setFaceColor(int faceColor) {
+        this.faceColor = faceColor;
+        invalidate();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
