@@ -33,4 +33,6 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="title_activity_scheduler">SchedulerActivity</string>
     <string name="title_activity_custom_view">CustomViewActivity</string>
+    <string name="check_the_menu_for_app">Check the Menu for app</string>
+    <string name="content_description_room_database_demo">Room database demo</string>
 </resources>
