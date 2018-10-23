@@ -1,6 +1,7 @@
 package com.axiasoft.mycertificationworkout.views.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +14,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.axiasoft.mycertificationworkout.R;
+import com.axiasoft.mycertificationworkout.views.custom.CustomViewActivity;
+import com.axiasoft.mycertificationworkout.views.schedulenotifications.SchedulerActivity;
+import com.axiasoft.mycertificationworkout.views.settings.SettingsActivity;
 import com.axiasoft.mycertificationworkout.views.words.WordsActivity;
 
 public class HomeActivity extends AppCompatActivity
@@ -35,6 +40,7 @@ public class HomeActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+         checkUpSettings();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,6 +78,8 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -87,9 +95,9 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_room) {
             launchWordsActivity();
         } else if (id == R.id.nav_jobs) {
-
-        } else if (id == R.id.nav_slideshow) {
-
+            lauchJobsActivity();
+        } else if (id == R.id.nav_custom_views) {
+            launchCustomsViewsActivity();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -103,7 +111,25 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    private void checkUpSettings(){
+        android.support.v7.preference.PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        SharedPreferences sharedPref =
+                android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean switchPref = sharedPref.getBoolean(SettingsActivity.KEY_PREF_EXAMPLE_SWITCH, false);
+        Toast.makeText(this, switchPref.toString(), Toast.LENGTH_SHORT).show();
+
+    }
+
     private void launchWordsActivity(){
         startActivity(new Intent(this, WordsActivity.class));
+    }
+
+    private void lauchJobsActivity(){
+        startActivity(new Intent(this, SchedulerActivity.class));
+    }
+
+    private void launchCustomsViewsActivity(){
+        startActivity(new Intent(this, CustomViewActivity.class));
     }
 }

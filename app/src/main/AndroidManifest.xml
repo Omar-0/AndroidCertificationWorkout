@@ -12,6 +12,7 @@
         <activity
             android:name=".views.home.HomeActivity"
             android:label="@string/title_activity_home"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,9 +23,29 @@
         <activity
             android:name=".views.words.WordsActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".views.words.NewWordActivity" />
+        <activity
+            android:name=".views.schedulenotifications.SchedulerActivity"
+            android:label="@string/title_activity_scheduler"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".services.NotificationJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity
+            android:name=".views.settings.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".views.home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".views.home.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".views.custom.CustomViewActivity"
+            android:label="@string/title_activity_custom_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
