@@ -26,7 +26,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.android.basicandroidaccessibility.ContentGroupingActivity"
+    tools:context=".views.basicandroidaccessibility.ContentGroupingActivity"
     tools:showIn="@layout/activity_content_grouping">
 
     <TextView
@@ -36,10 +36,13 @@
         android:textColor="@color/dark_grey"
         android:textSize="@dimen/heading" />
 
+    <!-- two different ways to grouping -->
+
     <RelativeLayout
         android:id="@+id/song_data_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:focusable="true">
 
         <TextView
             android:id="@+id/label_song_name"
@@ -105,4 +108,95 @@
             android:text="@string/value_song_cost"
             android:textColor="@color/dark_grey" />
     </RelativeLayout>
+
+    <!-- another and better way grouping -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_margin="8dp"
+        android:background="@color/dark_grey"/>
+    <RelativeLayout
+        android:id="@+id/song_data_container2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/label_song_name2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/tiny_margin"
+            android:text="@string/label_song_name"
+            android:textColor="@color/dark_grey" />
+
+        <TextView
+            android:id="@+id/value_song_name2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/label_song_name2"
+            android:text="@string/value_song_name"
+            android:textColor="@color/dark_grey" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/label_song_artists2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="@dimen/tiny_margin"
+            android:text="@string/label_song_artists"
+            android:textColor="@color/dark_grey" />
+
+        <TextView
+            android:id="@+id/value_song_artists2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/label_song_artists2"
+            android:text="@string/value_song_artists"
+            android:textColor="@color/dark_grey" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/label_song_cost2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="@dimen/tiny_margin"
+            android:text="@string/label_song_cost"
+            android:textColor="@color/dark_grey" />
+
+        <TextView
+            android:id="@+id/value_song_cost2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/label_song_cost2"
+            android:text="@string/value_song_cost"
+            android:textColor="@color/dark_grey" />
+    </RelativeLayout>
+
+
+
 </LinearLayout>
