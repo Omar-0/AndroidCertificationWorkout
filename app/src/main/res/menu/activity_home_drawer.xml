@@ -20,9 +20,9 @@
             android:icon="@android:drawable/ic_dialog_dialer"
             android:title="Custom View" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_accessability"
+            android:icon="@drawable/ic_accessibility_black_24dp"
+            android:title="Accessability" />
     </group>
 
     <item android:title="Communicate">

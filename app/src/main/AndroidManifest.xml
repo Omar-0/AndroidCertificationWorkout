@@ -46,6 +46,33 @@
             android:name=".views.custom.CustomViewActivity"
             android:label="@string/title_activity_custom_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <activity android:name=".views.basicandroidaccessibility.AccessabilityMainActivity">
+        </activity>
+        <activity
+            android:name=".views.basicandroidaccessibility.ContentLabelingActivity"
+            android:label="@string/title_activity_content_labeling"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.basicandroidaccessibility.LiveRegionActivity"
+            android:label="@string/title_activity_live_region"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.basicandroidaccessibility.ExpandTouchAreaActivity"
+            android:label="@string/title_activity_expand_touch_area"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.basicandroidaccessibility.ContentGroupingActivity"
+            android:label="@string/title_activity_content_grouping"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".views.basicandroidaccessibility.InsufficientContrastActivity"
+            android:label="@string/title_activity_insufficient_contrast"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+
     </application>
 
 </manifest>

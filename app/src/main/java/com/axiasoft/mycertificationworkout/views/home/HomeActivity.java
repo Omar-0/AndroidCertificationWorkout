@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.axiasoft.mycertificationworkout.R;
+import com.axiasoft.mycertificationworkout.views.basicandroidaccessibility.AccessabilityMainActivity;
 import com.axiasoft.mycertificationworkout.views.custom.CustomViewActivity;
 import com.axiasoft.mycertificationworkout.views.schedulenotifications.SchedulerActivity;
 import com.axiasoft.mycertificationworkout.views.settings.SettingsActivity;
@@ -98,8 +99,8 @@ public class HomeActivity extends AppCompatActivity
             lauchJobsActivity();
         } else if (id == R.id.nav_custom_views) {
             launchCustomsViewsActivity();
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_accessability) {
+            lauchAccessabilityActivity();
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
@@ -131,5 +132,9 @@ public class HomeActivity extends AppCompatActivity
 
     private void launchCustomsViewsActivity(){
         startActivity(new Intent(this, CustomViewActivity.class));
+    }
+
+    private void lauchAccessabilityActivity(){
+        startActivity(new Intent(this, AccessabilityMainActivity.class));
     }
 }

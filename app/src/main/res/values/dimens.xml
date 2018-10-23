@@ -6,4 +6,19 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="view_margin">4dp</dimen>
+
+
+
+    <dimen name="tiny_margin">4dp</dimen>
+
+    <dimen name="min_button_height">48dp</dimen>
+    <dimen name="standard_padding">12dp</dimen>
+    <dimen name="edit_text_padding">18dp</dimen>
+
+    <dimen name="large_heading">32sp</dimen>
+    <dimen name="heading">24sp</dimen>
+    <dimen name="standard_text">16sp</dimen>
+    <dimen name="large_text">20sp</dimen>
+
+
 </resources>
