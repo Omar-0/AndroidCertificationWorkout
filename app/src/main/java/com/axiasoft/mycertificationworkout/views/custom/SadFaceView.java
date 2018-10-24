@@ -7,10 +7,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.axiasoft.mycertificationworkout.R;
 
@@ -73,6 +78,42 @@ public class SadFaceView extends View {
         super(context, attrs);
         paint.setAntiAlias(true);
         setupAttributes(context, attrs);
+    }
+
+    boolean mDownTouch = false;
+
+    //not really useful
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        super.onTouchEvent(event);
+
+        // Listening for the down and up touch events
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mDownTouch = true;
+                return true;
+
+            case MotionEvent.ACTION_UP:
+                if (mDownTouch) {
+                    mDownTouch = false;
+                    performClick(); // Call this method to handle the response, and
+                    // thereby enable accessibility services to
+                    // perform this action for a user who cannot
+                    // click the touchscreen.
+                    return true;
+                }
+        }
+        return false; // Return false for other touch events
+    }
+
+    @Override
+    public boolean performClick() {
+        // Calls the super implementation, which generates an AccessibilityEvent
+        // and calls the onClick() listener on the view, if any
+        super.performClick();
+        Log.d("FACE", "onPerformClick");
+        // Handle the action for the custom click here
+        return true;
     }
 
 
@@ -153,6 +194,9 @@ public class SadFaceView extends View {
         return result;
     }
 
+
+
+    //region FACE paint
     private void drawFaceBackground(Canvas canvas) {
 
         // 1
@@ -206,4 +250,5 @@ public class SadFaceView extends View {
 // 5
         canvas.drawPath(mouthPath, paint);
     }
+    //endregion
 }

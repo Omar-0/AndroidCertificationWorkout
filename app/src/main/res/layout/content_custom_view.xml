@@ -28,6 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="Display face"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.axiasoft.mycertificationworkout.views.custom.SadFaceView
@@ -44,6 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:mouthColor="@color/white"
+        android:contentDescription="Gray face button"
         app:state="happy" />
 
     <com.axiasoft.mycertificationworkout.views.custom.SadFaceView
